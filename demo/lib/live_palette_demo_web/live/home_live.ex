@@ -2,6 +2,7 @@ defmodule LivePaletteDemoWeb.HomeLive do
   use LivePaletteDemoWeb, :live_view
 
   def mount(_params, _session, socket) do
+    LivePalette.hello()
     {:ok, socket}
   end
 

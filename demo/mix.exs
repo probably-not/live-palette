@@ -11,7 +11,7 @@ defmodule LivePaletteDemo.MixProject do
       aliases: aliases(),
       deps: deps(),
       releases: [
-        demo: [
+        live_palette_demo: [
           strip_beams: [
             keep: ["Docs"]
           ]
