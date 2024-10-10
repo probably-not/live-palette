@@ -17,6 +17,6 @@ defmodule LivePaletteDemoWeb.Router do
   scope "/", LivePaletteDemoWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", HomeLive, :home
   end
 end

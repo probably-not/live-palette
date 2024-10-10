@@ -36,7 +36,7 @@ defmodule LivePaletteDemoWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
-        layout: {LivePaletteDemoWeb.Layouts, :app}
+        layout: {LivePaletteDemoWeb.Live.Layouts, :live}
 
       unquote(html_helpers())
     end
