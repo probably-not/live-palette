@@ -51,7 +51,6 @@ defmodule LivePaletteDemo.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
-      {:phoenix_storybook, "~> 0.6.0"},
       {:live_palette, path: ".."}
     ]
   end
