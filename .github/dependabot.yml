@@ -2,17 +2,31 @@ version: 2
 
 updates:
   - package-ecosystem: "mix"
-    insecure-external-code-execution: "allow"
     directory: "/"
     schedule:
       interval: "daily"
     reviewers:
       - "@probably-not"
     open-pull-requests-limit: 10
+  - package-ecosystem: "mix"
+    directory: "/demo"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+    reviewers:
+      - "@probably-not"
+    open-pull-requests-limit: 10
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 10
+      interval: "weekly"
+      day: "sunday"
+    reviewers:
+      - "@probably-not"
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
     reviewers:
       - "@probably-not"
