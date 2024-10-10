@@ -1,10 +1,12 @@
 defmodule LivePalette.MixProject do
   use Mix.Project
 
+  @version "0.0.1-rc-1"
+
   def project do
     [
       app: :live_palette,
-      version: "0.0.1-rc-1",
+      version: @version,
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       elixirc_paths: elixirc_path(Mix.env()),
@@ -17,18 +19,31 @@ defmodule LivePalette.MixProject do
         maintainers: ["Coby Benveniste"],
         licenses: ["MIT"],
         links: %{"GitHub" => "https://github.com/probably-not/live-palette"},
-        files: ["lib", "mix.exs", "README*", "LICENSE*", "CHANGELOG*"]
+        files: [
+          "lib",
+          ".formatter.exs",
+          "mix.exs",
+          "README*",
+          "LICENSE*",
+          "CHANGELOG*"
+        ]
       ],
       aliases: aliases(),
       docs: docs(),
-      dialyzer: [plt_file: {:no_warn, "priv/plts/dialyzer.plt"}, plt_add_deps: :app_tree],
+      dialyzer: [
+        plt_add_apps: [:mix],
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        plt_add_deps: :app_tree
+      ],
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         ci: :test,
         coveralls: :test,
         "coveralls.detail": :test,
-        "coveralls.post": :test,
-        "coveralls.html": :test
+        "coveralls.github": :test,
+        "coveralls.html": :test,
+        "coveralls.json": :test,
+        "coveralls.post": :test
       ]
     ]
   end
@@ -44,12 +59,15 @@ defmodule LivePalette.MixProject do
     ]
   end
 
-  defp applications(:dev), do: applications(:all) ++ [:remixed_remix, :runtime_tools]
+  defp applications(:dev),
+    do: applications(:all) ++ [:remixed_remix, :runtime_tools]
+
   defp applications(_all), do: [:logger]
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:phoenix_live_view, "~> 1.0.0-rc.6"},
       ## Testing and Development Dependencies
       {:ex_doc, "~> 0.34.2", only: :dev, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
@@ -64,19 +82,25 @@ defmodule LivePalette.MixProject do
   defp aliases do
     [
       quality: ["format", "credo --strict", "dialyzer"],
-      ci: ["coveralls", "format --check-formatted", "credo --strict", "dialyzer"]
+      ci: [
+        "coveralls",
+        "format --check-formatted",
+        "credo --strict",
+        "dialyzer"
+      ]
     ]
   end
 
   defp docs do
     [
+      main: "readme",
       extras: [
         "CHANGELOG.md": [title: "Changelog"],
         "README.md": [title: "README"]
       ],
-      groups_for_extras: [],
+      source_ref: @version,
       skip_undefined_reference_warnings_on: Path.wildcard("**/*.md"),
-      main: "LivePalette"
+      groups_for_extras: []
     ]
   end
 end
