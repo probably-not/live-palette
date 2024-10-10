@@ -27,7 +27,7 @@ defmodule LivePaletteDemoWeb do
         layouts: [html: LivePaletteDemoWeb.Layouts]
 
       import Plug.Conn
-      import LivePaletteDemoWeb.Gettext
+      use Gettext, backend: LivePaletteDemoWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -69,7 +69,7 @@ defmodule LivePaletteDemoWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import LivePaletteDemoWeb.CoreComponents
-      import LivePaletteDemoWeb.Gettext
+      use Gettext, backend: LivePaletteDemoWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
