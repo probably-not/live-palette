@@ -40,6 +40,17 @@ defmodule LivePalette do
     the palette when both the given key and the meta key are pressed together.
     """
 
+  attr :metakey_param, :string,
+    required: false,
+    default: "metaKey",
+    doc: """
+    The param on the key event that the meta key value appears in. When setting `require_metakey` to `true`,
+    this value is used to get the parameter from the params sent in the event. By default, this is set to `"metaKey"`,
+    which is taken from the example provided in the [Phoenix LiveView Key Events documentation](https://hexdocs.pm/phoenix_live_view/bindings.html#key-events).
+
+    If you have a different parameter name, you must update this attribute in order to ensure that it is properly matched.
+    """
+
   @doc """
   The live palette component itself.
 
@@ -53,6 +64,7 @@ defmodule LivePalette do
       show={@show_on_initial_render}
       key={@key}
       require_metakey={@require_metakey}
+      metakey_param={@metakey_param}
     />
     """
   end

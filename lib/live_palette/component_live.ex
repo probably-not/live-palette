@@ -16,7 +16,7 @@ defmodule LivePalette.ComponentLive do
   end
 
   def handle_event("show_palette", %{"key" => _key} = params, socket) do
-    meta? = Map.get(params, "metaKey", false)
+    meta? = Map.get(params, socket.assigns.metakey_param, false)
 
     cond do
       socket.assigns.require_metakey and meta? ->
