@@ -36,7 +36,7 @@ defmodule LivePalette.ComponentLive do
 
   def disconnected_render(assigns) do
     ~H"""
-    <div></div>
+    <div class="hidden"></div>
     """
   end
 
