@@ -51,6 +51,14 @@ defmodule LivePalette do
     If you have a different parameter name, you must update this attribute in order to ensure that it is properly matched.
     """
 
+  attr :placeholder, :string,
+    required: false,
+    default: "Enter your command",
+    doc: """
+    The placeholder that will be added to the palette's input.
+    This defaults to "Enter your command".
+    """
+
   @doc """
   The live palette component itself.
 
@@ -65,6 +73,7 @@ defmodule LivePalette do
       key={@key}
       require_metakey={@require_metakey}
       metakey_param={@metakey_param}
+      placeholder={@placeholder}
     />
     """
   end
