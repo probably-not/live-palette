@@ -15,6 +15,7 @@ config :live_palette_demo, LivePaletteDemoWeb.Endpoint,
   debug_errors: true,
   secret_key_base: "ED1D7WFp2dPwRPnGPPymsOYWFcJp66V//n3eVvC9dKDdYQogRQAd2Ffdk3v2ZVGH",
   watchers: [
+    lib_watcher: {LivePaletteDemo.LibWatcher, :watch, [:live_palette_demo, []]},
     esbuild: {Esbuild, :install_and_run, [:live_palette_demo, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:live_palette_demo, ~w(--watch)]}
   ]
