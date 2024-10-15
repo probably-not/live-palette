@@ -9,6 +9,7 @@ module.exports = {
     "./js/**/*.js",
     "../lib/live_palette_demo_web.ex",
     "../lib/live_palette_demo_web/**/*.*ex",
+    "../../lib/**/*.ex",
   ],
   theme: {
     extend: {
