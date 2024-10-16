@@ -1,7 +1,7 @@
 defmodule LivePalette.MixProject do
   use Mix.Project
 
-  @version "0.0.1-rc-2"
+  @version "0.0.1-rc-3"
 
   def project do
     [
