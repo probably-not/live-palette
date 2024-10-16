@@ -13,6 +13,15 @@ defmodule LivePalette do
     The component ID. The underlying implementation of the LivePalette component is a LiveComponent, which requires a component ID.
     """
 
+  attr :actions, :list,
+    required: true,
+    doc: """
+    The list of possible actions available to this palette.
+    The structure of the actions maps is listed below:
+
+    %{}
+    """
+
   attr :show_on_initial_render, :boolean,
     required: false,
     default: false,
@@ -59,6 +68,19 @@ defmodule LivePalette do
     This defaults to "Enter your command".
     """
 
+  attr :show_all_results_on_empty_input, :boolean,
+    required: false,
+    default: false,
+    doc: """
+    Whether or not to show all of the results when the input is empty.
+    This is set to false by default, however, when set to true, when the input is empty
+    we will create a full list of all of the palettes actions and show them in a scrollable list.
+
+    It is recommended to leave this set to false if the amount of actions is large, as this can cause
+    very large diffs to be sent to the client. However, if the number of actions in the palette is relatively
+    short, this can be set to true to show the user all available actions.
+    """
+
   @doc """
   The live palette component itself.
 
@@ -74,6 +96,8 @@ defmodule LivePalette do
       require_metakey={@require_metakey}
       metakey_param={@metakey_param}
       placeholder={@placeholder}
+      show_all_results_on_empty_input={@show_all_results_on_empty_input}
+      actions={@actions}
     />
     """
   end

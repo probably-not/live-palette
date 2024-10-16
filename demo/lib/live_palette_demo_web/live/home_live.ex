@@ -10,7 +10,7 @@ defmodule LivePaletteDemoWeb.HomeLive do
   def render(assigns) do
     ~H"""
     <h1>Hello World</h1>
-    <.live_palette id="1" require_metakey={true} />
+    <.live_palette id="1" require_metakey={true} actions={[]} />
     """
   end
 end

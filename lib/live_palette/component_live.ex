@@ -2,7 +2,7 @@ defmodule LivePalette.ComponentLive do
   @moduledoc false
 
   use Phoenix.LiveComponent
-  import LivePalette.Form
+  import LivePalette.{Form, Result}
 
   def mount(socket) do
     if connected?(socket) do
@@ -15,7 +15,8 @@ defmodule LivePalette.ComponentLive do
   def update(assigns, socket) do
     socket =
       assign(socket, assigns)
-      |> assign(:form, to_form(%{"search_text" => ""}))
+      |> assign_new(:form, fn -> to_form(%{"search_text" => ""}) end)
+      |> assign_new(:results, fn -> nil end)
 
     {:ok, socket}
   end
@@ -63,6 +64,7 @@ defmodule LivePalette.ComponentLive do
   end
 
   def render(%{show: true} = assigns) do
+    # TODO: Use phx-mounted and phx-remove in order to animate show and hide properly.
     ~H"""
     <div
       phx-target={@myself}
@@ -71,7 +73,7 @@ defmodule LivePalette.ComponentLive do
       phx-click-away="hide_palette"
     >
       <div class="fixed flex items-start justify-center w-full inset-0 pt-[14vh] px-4 pb-4">
-        <div class="max-w-[600px] w-full rounded-lg overflow-hidden pointer-events-auto">
+        <div class="max-w-[600px] w-full bg-white text-black rounded-lg overflow-hidden shadow-[0px_6px_20px_0px_rgba(0,0,0,0.2)] pointer-events-auto">
           <.form
             for={@form}
             phx-target={@myself}
@@ -80,6 +82,7 @@ defmodule LivePalette.ComponentLive do
           >
             <.input field={@form[:search_text]} placeholder={@placeholder} />
           </.form>
+          <.result_list :if={@results} results={@results} />
         </div>
       </div>
     </div>
