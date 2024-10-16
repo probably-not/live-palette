@@ -1,4 +1,6 @@
 defmodule LivePalette.Result do
+  @moduledoc false
+
   use Phoenix.Component
 
   def result_list(assigns) do

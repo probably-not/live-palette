@@ -1,4 +1,6 @@
 defmodule LivePalette.Form do
+  @moduledoc false
+
   alias Phoenix.LiveView.JS
   use Phoenix.Component
 
