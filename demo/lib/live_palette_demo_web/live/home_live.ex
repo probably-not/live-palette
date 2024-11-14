@@ -28,13 +28,9 @@ defmodule LivePaletteDemoWeb.HomeLive do
     ~H"""
     <.live_palette id="example" require_metakey={true} actions={@actions} />
     <div class="max-w-4xl mx-auto px-4 py-12">
-      <div class="flex justify-center mb-8">
-        <svg class="h-16 w-16">
-          <!-- TODO: Add a logo and create a full SVG -->
-        </svg>
-      </div>
-
-      <h1 class="text-3xl font-bold text-center mb-8">LivePalette</h1>
+      <h1 class="text-3xl font-bold text-center mb-8">
+        LivePalette
+      </h1>
       <p class="text-lg mb-6">
         <span class="underline">LivePalette</span> is a command palette for Phoenix LiveView,
         reminiscent of the VSCode and Sublime Command Palettes,
@@ -49,10 +45,7 @@ defmodule LivePaletteDemoWeb.HomeLive do
       <h2 class="text-2xl font-bold mb-4">Docs and Usage</h2>
       <p class="mb-8">
         You can find usage information and documentation on Hexdocs at the following link:
-        <a
-          href="https://hexdocs.pm/live_palette"
-          class="text-gray-600 hover:text-gray-900 underline"
-        >
+        <a href="https://hexdocs.pm/live_palette" class="text-gray-600 hover:text-gray-900 underline">
           https://hexdocs.pm/live_palette
         </a>
       </p>
