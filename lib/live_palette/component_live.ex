@@ -26,12 +26,12 @@ defmodule LivePalette.ComponentLive do
   end
 
   defp assign_actions(socket) do
-    actions = Enum.map(socket.assigns.actions, &Actionable.to_action/1)
-    always_shown = Enum.filter(actions, & &1.always_show?)
+    actions_list = Enum.map(socket.assigns.actions, &Actionable.to_action/1)
+    always_shown_actions = Enum.filter(actions_list, & &1.always_show?)
 
     socket
-    |> assign(:actions, actions)
-    |> assign(:always_shown, always_shown)
+    |> assign(:actions_list, actions_list)
+    |> assign(:always_shown_actions, always_shown_actions)
   end
 
   def handle_event("show_palette", %{"key" => _key} = params, socket) do
@@ -124,10 +124,10 @@ defmodule LivePalette.ComponentLive do
             <.input field={@form[:search_text]} placeholder={@placeholder} />
           </.form>
           <.result_list
-            :if={@results != [] or @always_shown != []}
+            :if={@results != [] or @always_shown_actions != []}
             icon_component={@icon_component}
             results={@results}
-            always_shown={@always_shown}
+            always_shown={@always_shown_actions}
           />
         </div>
       </div>
