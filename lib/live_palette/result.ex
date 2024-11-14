@@ -4,7 +4,6 @@ defmodule LivePalette.Result do
   use Phoenix.Component
 
   attr :results, :list, required: false, default: []
-  attr :always_shown, :list, required: false, default: []
 
   # TODO: When upgrading to latest LV - we can set the type to be a function with an arity of 1.
   attr :icon_component, :any, required: true
@@ -15,13 +14,6 @@ defmodule LivePalette.Result do
       <div role="listbox" class="h-[478px] w-full">
         <.result
           :for={result <- @results}
-          title={result.title}
-          subtitle={result.subtitle}
-          icon_component={@icon_component}
-          icon_name={result.icon_name}
-        />
-        <.result
-          :for={result <- @always_shown}
           title={result.title}
           subtitle={result.subtitle}
           icon_component={@icon_component}

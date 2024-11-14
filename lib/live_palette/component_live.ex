@@ -32,6 +32,7 @@ defmodule LivePalette.ComponentLive do
     socket
     |> assign(:actions_list, actions_list)
     |> assign(:always_shown_actions, always_shown_actions)
+    |> assign(:results, always_shown_actions)
   end
 
   def handle_event("show_palette", %{"key" => _key} = params, socket) do
@@ -53,8 +54,25 @@ defmodule LivePalette.ComponentLive do
     {:noreply, assign(socket, show: false)}
   end
 
+  def handle_event("search", %{"search_text" => ""} = _params, socket) do
+    {:noreply, assign_matches(socket, "", socket.assigns.always_shown_actions)}
+  end
+
   def handle_event("search", %{"search_text" => search_text} = _params, socket) do
-    {:noreply, assign(socket, :form, to_form(%{"search_text" => search_text}))}
+    matches =
+      LivePalette.Search.matches(
+        socket.assigns.actions_list,
+        search_text,
+        socket.assigns.match_threshold
+      )
+
+    {:noreply, assign_matches(socket, search_text, matches)}
+  end
+
+  defp assign_matches(socket, term, matches) do
+    socket
+    |> assign(:form, to_form(%{"search_text" => term}))
+    |> assign(:results, matches)
   end
 
   def disconnected_render(assigns) do
@@ -124,10 +142,9 @@ defmodule LivePalette.ComponentLive do
             <.input field={@form[:search_text]} placeholder={@placeholder} />
           </.form>
           <.result_list
-            :if={@results != [] or @always_shown_actions != []}
+            :if={@results != []}
             icon_component={@icon_component}
             results={@results}
-            always_shown={@always_shown_actions}
           />
         </div>
       </div>

@@ -47,6 +47,18 @@ defmodule LivePalette do
     the palette when both the given key and the meta key are pressed together.
     """
 
+  attr :match_threshold, :float,
+    required: false,
+    default: 0.5,
+    doc: """
+    The minimum threshold that we need in order to determine if the action is a match to a specific search term.
+    The action's title and subtitle will be checked against the search term as the user types it, and the actions
+    will be sorted by score.
+
+    The value must be a float between 0.0 and 1.0.
+    The default threshold to 0.5.
+    """
+
   attr :metakey_param, :string,
     required: false,
     default: "metaKey",
@@ -113,6 +125,7 @@ defmodule LivePalette do
       show_all_results_on_empty_input={@show_all_results_on_empty_input}
       actions={@actions}
       icon_component={@icon_component}
+      match_threshold={@match_threshold}
     />
     """
   end
