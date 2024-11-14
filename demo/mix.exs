@@ -47,10 +47,15 @@ defmodule LivePaletteDemo.MixProject do
       {:floki, ">= 0.30.0", only: :test},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
-      {:heroicons, "~> 0.5.3"},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
+      {:heroicons,
+      github: "tailwindlabs/heroicons",
+      tag: "v2.1.5",
+      app: false,
+      compile: false,
+      sparse: "optimized"},
       {:live_palette, path: ".."}
     ]
   end
