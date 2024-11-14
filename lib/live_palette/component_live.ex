@@ -3,6 +3,7 @@ defmodule LivePalette.ComponentLive do
 
   use Phoenix.LiveComponent
   import LivePalette.{Form, Result}
+  alias Phoenix.LiveView.JS
 
   def mount(socket) do
     if connected?(socket) do
@@ -51,9 +52,16 @@ defmodule LivePalette.ComponentLive do
   end
 
   def render(%{show: false} = assigns) do
+    ## For animation purposes - this div does not have the "hidden" class set on it.
+    ## The `phx-remove` animation will not be seen if the parent (this div) has the
+    ## "hidden" class on it (for good reason... it's hidden).
+    ## While it is empty, meaning it takes up no space visually in the document, it is not
+    ## explicitly "hidden"... I'm not sure if this is a huge problem or not. For now, and for
+    ## the sake of "prettiness", I'll keep it like this. However, it should probably be looked at
+    ## eventually, just to make sure that this isn't... a problem...
     ~H"""
     <div
-      class="hidden"
+      id={@id}
       phx-target={@myself}
       phx-window-keydown="show_palette"
       phx-key={@key}
@@ -64,16 +72,37 @@ defmodule LivePalette.ComponentLive do
   end
 
   def render(%{show: true} = assigns) do
-    # TODO: Use phx-mounted and phx-remove in order to animate show and hide properly.
     ~H"""
     <div
+      id={@id}
       phx-target={@myself}
       phx-window-keyup="hide_palette"
       phx-key="Escape"
-      phx-click-away="hide_palette"
     >
-      <div class="fixed flex items-start justify-center w-full inset-0 pt-[14vh] px-4 pb-4">
-        <div class="max-w-[600px] w-full bg-white text-black rounded-lg overflow-hidden shadow-[0px_6px_20px_0px_rgba(0,0,0,0.2)] pointer-events-auto">
+      <div
+        id={@id <> "-wrapper"}
+        class="fixed flex items-start justify-center w-full inset-0 pt-[14vh] px-4 pb-4"
+        phx-remove={JS.exec("phx-remove", to: "##{@id}-palette")}
+      >
+        <div
+          id={@id <> "-palette"}
+          phx-target={@myself}
+          phx-mounted={
+            JS.transition(
+              {"ease-out duration-100", "scale-0", "scale-100"},
+              time: 100
+            )
+          }
+          phx-remove={
+            JS.transition(
+              {"ease-in duration-100", "scale-100", "scale-0"},
+              time: 100
+            )
+          }
+          phx-click-away="hide_palette"
+          phx-target={@myself}
+          class="max-w-[600px] w-full bg-white text-black rounded-lg overflow-hidden shadow-[0px_6px_20px_0px_rgba(0,0,0,0.2)] pointer-events-auto"
+        >
           <.form
             for={@form}
             phx-target={@myself}
