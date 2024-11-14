@@ -8,6 +8,7 @@ defmodule LivePaletteDemoWeb.HomeLive do
       %{
         title: "Do something",
         always_show?: true,
+        icon_name: "hero-home-modern"
       },
       %{
         title: "Do something else",

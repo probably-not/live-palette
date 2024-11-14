@@ -3,7 +3,8 @@ defimpl LivePalette.Actionable, for: Map do
     %LivePalette.Action{
       title: attrs.title,
       subtitle: attrs[:subtitle],
-      always_show?: attrs.always_show?
+      always_show?: attrs.always_show?,
+      icon_name: attrs[:icon_name]
     }
   end
 end
