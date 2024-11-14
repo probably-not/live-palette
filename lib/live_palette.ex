@@ -17,9 +17,7 @@ defmodule LivePalette do
     required: true,
     doc: """
     The list of possible actions available to this palette.
-    The structure of the actions maps is listed below:
-
-    %{}
+    Actions passed in to this list must implement the `LivePalette.Actionable` protocol.
     """
 
   attr :show_on_initial_render, :boolean,
