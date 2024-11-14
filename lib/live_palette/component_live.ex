@@ -3,6 +3,8 @@ defmodule LivePalette.ComponentLive do
 
   use Phoenix.LiveComponent
   import LivePalette.{Form, Result}
+
+  alias LivePalette.Actionable
   alias Phoenix.LiveView.JS
 
   def mount(socket) do
@@ -17,9 +19,19 @@ defmodule LivePalette.ComponentLive do
     socket =
       assign(socket, assigns)
       |> assign_new(:form, fn -> to_form(%{"search_text" => ""}) end)
-      |> assign_new(:results, fn -> nil end)
+      |> assign_new(:results, fn -> [] end)
+      |> assign_actions()
 
     {:ok, socket}
+  end
+
+  defp assign_actions(socket) do
+    actions = Enum.map(socket.assigns.actions, &Actionable.to_action/1)
+    always_shown = Enum.filter(actions, & &1.always_show?)
+
+    socket
+    |> assign(:actions, actions)
+    |> assign(:always_shown, always_shown)
   end
 
   def handle_event("show_palette", %{"key" => _key} = params, socket) do
@@ -111,7 +123,12 @@ defmodule LivePalette.ComponentLive do
           >
             <.input field={@form[:search_text]} placeholder={@placeholder} />
           </.form>
-          <.result_list :if={@results and @results != []} results={@results} />
+          <.result_list
+            :if={@results != [] or @always_shown != []}
+            icon_component={@icon_component}
+            results={@results}
+            always_shown={@always_shown}
+          />
         </div>
       </div>
     </div>
