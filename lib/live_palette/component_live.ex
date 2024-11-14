@@ -111,7 +111,7 @@ defmodule LivePalette.ComponentLive do
           >
             <.input field={@form[:search_text]} placeholder={@placeholder} />
           </.form>
-          <.result_list :if={@results} results={@results} />
+          <.result_list :if={@results and @results != []} results={@results} />
         </div>
       </div>
     </div>
