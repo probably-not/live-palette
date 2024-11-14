@@ -13,11 +13,11 @@ defmodule LivePaletteDemoWeb.HomeLive do
       %{
         title: "Do something else",
         subtitle: "This does something else",
-        always_show?: true,
+        always_show?: true
       },
       %{
         title: "Do something other than those 2",
-        always_show?: false,
+        always_show?: false
       }
     ]
 

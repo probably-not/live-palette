@@ -51,11 +51,11 @@ defmodule LivePaletteDemo.MixProject do
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
       {:heroicons,
-      github: "tailwindlabs/heroicons",
-      tag: "v2.1.5",
-      app: false,
-      compile: false,
-      sparse: "optimized"},
+       github: "tailwindlabs/heroicons",
+       tag: "v2.1.5",
+       app: false,
+       compile: false,
+       sparse: "optimized"},
       {:live_palette, path: ".."}
     ]
   end
