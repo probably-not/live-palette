@@ -31,11 +31,13 @@ defmodule LivePalette.Search.Index.PreprocessedAction do
     }
   end
 
+  # credo:disable-for-next-line
   # TODO: For now, I've implemented exact, prefix, acronym, and substring matching.
   # Other suggested match types are word boundary, and fuzzy matching.
   # I'm going to leave those off right now so I can continue with the next parts of the project,
   # but I should come back to this part so we can figure out a better way to do the matching in an efficient way.
 
+  # credo:disable-for-next-line
   # TODO: This all needs to be tested and validated. Ideally as much as possible.
 
   @spec matches(action :: PreprocessedAction.t(), query :: String.t()) ::

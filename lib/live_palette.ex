@@ -91,6 +91,7 @@ defmodule LivePalette do
     short, this can be set to true to show the user all available actions.
     """
 
+  # credo:disable-for-next-line
   # TODO: When upgrading to latest LV - we can set the type to be a function with an arity of 1.
   attr :icon_component, :any,
     required: false,

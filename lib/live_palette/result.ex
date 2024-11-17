@@ -5,6 +5,7 @@ defmodule LivePalette.Result do
 
   attr :results, :list, required: false, default: []
 
+  # credo:disable-for-next-line
   # TODO: When upgrading to latest LV - we can set the type to be a function with an arity of 1.
   attr :icon_component, :any, required: true
 
@@ -28,6 +29,7 @@ defmodule LivePalette.Result do
   attr :subtitle, :string, required: false
   attr :icon_name, :string, required: false
 
+  # credo:disable-for-next-line
   # TODO: When upgrading to latest LV - we can set the type to be a function with an arity of 1.
   attr :icon_component, :any, required: true
 
