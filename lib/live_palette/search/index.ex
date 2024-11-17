@@ -29,6 +29,12 @@ defmodule LivePalette.Search.Index do
     }
   end
 
+  @spec get_actionable(index :: Index.t(), id :: Item.id()) ::
+          Actionable.t() | :error
+  def get_actionable(%Index{} = index, id) do
+    Map.fetch(index.actionables, id)
+  end
+
   @spec query(index :: Index.t(), query :: String.t(), threshold :: float()) ::
           list(Item.t())
   def query(index, query, threshold)

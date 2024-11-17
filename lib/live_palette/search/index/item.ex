@@ -5,7 +5,7 @@ defmodule LivePalette.Search.Index.Item do
   alias LivePalette.{Action, Actionable}
   alias LivePalette.Search.Index.PreprocessedAction
 
-  @type id() :: non_neg_integer()
+  @type id() :: String.t()
 
   @type t() :: %__MODULE__{
           id: id(),
@@ -23,7 +23,7 @@ defmodule LivePalette.Search.Index.Item do
     action = LivePalette.Actionable.to_action(actionable)
 
     %Item{
-      id: :erlang.phash2(actionable),
+      id: :erlang.phash2(actionable) |> Integer.to_string(),
       original: actionable,
       action: action,
       preprocessed: PreprocessedAction.from_action(action),
