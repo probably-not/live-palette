@@ -2,31 +2,31 @@ defmodule LivePalette.Search.Index do
   @moduledoc false
 
   alias __MODULE__
-  alias LivePalette.Search.Index.{Item, PreprocessedAction}
+  alias LivePalette.Actionable
+  alias LivePalette.Search.Index.Item
 
   @opaque t() :: %__MODULE__{
             items: list(Item.t()),
-            always_shown: list(Item.t())
+            always_shown: list(Item.t()),
+            actionables: %{
+              Index.Item.id() => Actionable.t()
+            }
           }
 
-  defstruct [:items, :always_shown]
+  defstruct [:items, :always_shown, :actionables]
 
   @spec build(actionables :: list(LivePalette.Actionable.t())) :: Index.t()
   def build(actionables) do
-    items =
-      Enum.map(actionables, fn actionable ->
-        action = LivePalette.Actionable.to_action(actionable)
+    items = Enum.map(actionables, &Item.build/1)
 
-        %Item{
-          id: :erlang.phash2(actionable),
-          original: actionable,
-          action: action,
-          preprocessed: PreprocessedAction.from_action(action),
-          always_show?: action.always_show?
-        }
-      end)
-
-    %Index{items: items, always_shown: Enum.filter(items, & &1.always_show?)}
+    %Index{
+      items: items,
+      always_shown: Enum.filter(items, & &1.always_show?),
+      actionables:
+        Enum.reduce(items, %{}, fn item, acc ->
+          Map.put(acc, item.id, item.original)
+        end)
+    }
   end
 
   @spec query(index :: Index.t(), query :: String.t(), threshold :: float()) ::

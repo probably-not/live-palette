@@ -5,8 +5,10 @@ defmodule LivePalette.Search.Index.Item do
   alias LivePalette.{Action, Actionable}
   alias LivePalette.Search.Index.PreprocessedAction
 
+  @type id() :: non_neg_integer()
+
   @type t() :: %__MODULE__{
-          id: non_neg_integer(),
+          id: id(),
           original: Actionable.t(),
           action: Action.t(),
           preprocessed: PreprocessedAction.t(),
@@ -15,6 +17,19 @@ defmodule LivePalette.Search.Index.Item do
 
   @enforce_keys [:id]
   defstruct [:id, :original, :action, :preprocessed, :always_show?]
+
+  @spec build(actionable :: Actionable.t()) :: Item.t()
+  def build(actionable) do
+    action = LivePalette.Actionable.to_action(actionable)
+
+    %Item{
+      id: :erlang.phash2(actionable),
+      original: actionable,
+      action: action,
+      preprocessed: PreprocessedAction.from_action(action),
+      always_show?: action.always_show?
+    }
+  end
 
   @spec match_and_score(
           item :: Item.t(),
