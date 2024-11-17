@@ -64,6 +64,10 @@ defmodule LivePalette.ComponentLive do
     {:noreply, assign_matches(socket, search_text, matches)}
   end
 
+  def handle_event("select_result", %{"id" => _result_id} = _params, socket) do
+    {:noreply, socket}
+  end
+
   defp assign_matches(socket, term, matches) do
     socket
     |> assign(:form, to_form(%{"search_text" => term}))

@@ -42,7 +42,7 @@ defmodule LivePalette.Result do
     ~H"""
     <div
       role="option"
-      phx-click="select_action"
+      phx-click="select_result"
       phx-target={@target}
       phx-value-id={@id}
     >
