@@ -4,7 +4,7 @@ defmodule LivePalette.ComponentLive do
   use Phoenix.LiveComponent
   import LivePalette.{Form, Result}
 
-  alias LivePalette.Actionable
+  alias LivePalette.Search.Index
   alias Phoenix.LiveView.JS
 
   def mount(socket) do
@@ -20,19 +20,18 @@ defmodule LivePalette.ComponentLive do
       assign(socket, assigns)
       |> assign_new(:form, fn -> to_form(%{"search_text" => ""}) end)
       |> assign_new(:results, fn -> [] end)
-      |> assign_actions()
+      |> initialize_index()
 
     {:ok, socket}
   end
 
-  defp assign_actions(socket) do
-    actions_list = Enum.map(socket.assigns.actions, &Actionable.to_action/1)
-    always_shown_actions = Enum.filter(actions_list, & &1.always_show?)
+  defp initialize_index(socket) do
+    search_index = Index.build(socket.assigns.actions)
+    matches = Index.query(search_index, "", socket.assigns.match_threshold)
 
     socket
-    |> assign(:actions_list, actions_list)
-    |> assign(:always_shown_actions, always_shown_actions)
-    |> assign(:results, always_shown_actions)
+    |> assign(:search_index, search_index)
+    |> assign_matches("", matches)
   end
 
   def handle_event("show_palette", %{"key" => _key} = params, socket) do
@@ -54,14 +53,10 @@ defmodule LivePalette.ComponentLive do
     {:noreply, assign(socket, show: false)}
   end
 
-  def handle_event("search", %{"search_text" => ""} = _params, socket) do
-    {:noreply, assign_matches(socket, "", socket.assigns.always_shown_actions)}
-  end
-
   def handle_event("search", %{"search_text" => search_text} = _params, socket) do
     matches =
-      LivePalette.Search.matches(
-        socket.assigns.actions_list,
+      Index.query(
+        socket.assigns.search_index,
         search_text,
         socket.assigns.match_threshold
       )

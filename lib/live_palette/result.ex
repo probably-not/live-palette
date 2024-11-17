@@ -14,10 +14,10 @@ defmodule LivePalette.Result do
       <div role="listbox" class="h-[478px] w-full">
         <.result
           :for={result <- @results}
-          title={result.title}
-          subtitle={result.subtitle}
+          title={result.action.title}
+          subtitle={result.action.subtitle}
           icon_component={@icon_component}
-          icon_name={result.icon_name}
+          icon_name={result.action.icon_name}
         />
       </div>
     </div>
