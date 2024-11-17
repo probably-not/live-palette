@@ -6,13 +6,15 @@ defmodule LivePalette.Search.Index.Item do
   alias LivePalette.Search.Index.PreprocessedAction
 
   @type t() :: %__MODULE__{
+          id: non_neg_integer(),
           original: Actionable.t(),
           action: Action.t(),
           preprocessed: PreprocessedAction.t(),
           always_show?: boolean()
         }
 
-  defstruct [:original, :action, :preprocessed, :always_show?]
+  @enforce_keys [:id]
+  defstruct [:id, :original, :action, :preprocessed, :always_show?]
 
   @spec match_and_score(
           item :: Item.t(),

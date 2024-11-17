@@ -139,6 +139,7 @@ defmodule LivePalette.ComponentLive do
           </.form>
           <.result_list
             :if={@results != []}
+            target={@myself}
             icon_component={@icon_component}
             results={@results}
           />

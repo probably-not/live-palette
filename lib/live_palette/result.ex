@@ -3,6 +3,7 @@ defmodule LivePalette.Result do
 
   use Phoenix.Component
 
+  attr :target, :string, required: true
   attr :results, :list, required: false, default: []
 
   # credo:disable-for-next-line
@@ -15,6 +16,8 @@ defmodule LivePalette.Result do
       <div role="listbox" class="h-[478px] w-full">
         <.result
           :for={result <- @results}
+          target={@target}
+          id={result.id}
           title={result.action.title}
           subtitle={result.action.subtitle}
           icon_component={@icon_component}
@@ -25,6 +28,8 @@ defmodule LivePalette.Result do
     """
   end
 
+  attr :target, :string, required: true
+  attr :id, :string, required: true
   attr :title, :string, required: true
   attr :subtitle, :string, required: false
   attr :icon_name, :string, required: false
@@ -35,7 +40,12 @@ defmodule LivePalette.Result do
 
   defp result(assigns) do
     ~H"""
-    <div role="option">
+    <div
+      role="option"
+      phx-click="select_action"
+      phx-target={@target}
+      phx-value-id={@id}
+    >
       <div class="p-3 px-4 bg-transparent hover:bg-black/5 border-l-2 border-transparent hover:border-solid hover:border-black flex items-center justify-between cursor-pointer">
         <div class="flex gap-2 items-center text-sm">
           <%= if @icon_name do %>

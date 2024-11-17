@@ -18,6 +18,7 @@ defmodule LivePalette.Search.Index do
         action = LivePalette.Actionable.to_action(actionable)
 
         %Item{
+          id: :erlang.phash2(actionable),
           original: actionable,
           action: action,
           preprocessed: PreprocessedAction.from_action(action),
