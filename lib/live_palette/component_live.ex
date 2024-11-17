@@ -132,6 +132,7 @@ defmodule LivePalette.ComponentLive do
             for={@form}
             phx-target={@myself}
             phx-change="search"
+            phx-submit="search"
             phx-throttle={500}
           >
             <.input field={@form[:search_text]} placeholder={@placeholder} />
