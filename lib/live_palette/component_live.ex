@@ -5,6 +5,7 @@ defmodule LivePalette.ComponentLive do
   import LivePalette.{Form, Result}
 
   alias LivePalette.Search.Index
+  alias LivePalette.Actionable.{ExternallyLinkable, Linkable, Renderable, NotImplemented}
   alias Phoenix.LiveView.JS
 
   def mount(socket) do
@@ -58,8 +59,26 @@ defmodule LivePalette.ComponentLive do
     {:noreply, assign_matches(socket, search_text, matches)}
   end
 
-  def handle_event("select_result", %{"id" => _result_id} = _params, socket) do
-    {:noreply, socket}
+  def handle_event("select_result", %{"id" => id} = _params, socket) do
+    selected_actionable = Index.get_actionable!(socket.assigns.search_index, id)
+
+    renderable = Renderable.impl_for(selected_actionable)
+    linkable = Linkable.impl_for(selected_actionable)
+    externally_linkable = ExternallyLinkable.impl_for(selected_actionable)
+
+    cond do
+      not is_nil(renderable) ->
+        {:noreply, assign(socket, rendered_action: selected_actionable)}
+
+      not is_nil(linkable) ->
+        {:noreply, push_navigate(socket, to: Linkable.link_to(selected_actionable))}
+
+      not is_nil(externally_linkable) ->
+        {:noreply, redirect(socket, external: ExternallyLinkable.link_external(selected_actionable))}
+
+      true ->
+        raise NotImplemented, selected_actionable
+    end
   end
 
   defp assign_matches(socket, term, matches) do
