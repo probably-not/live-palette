@@ -1,12 +1,13 @@
 # LivePalette
 
+[![Hex.pm Version](https://img.shields.io/hexpm/v/live_palette.svg)](https://hex.pm/packages/live_palette) [![Documentation](https://img.shields.io/badge/docs-latest-blue.svg)](https://hexdocs.pm/live_palette/)
+
 A command palette for LiveView.
 Reminiscent of the VSCode and Sublime Command Palettes, the macOS Spotlight and Alfred, and Linear's Command-K Command Bar.
 
-## Installation
+## Usage
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `live_palette` to your list of dependencies in `mix.exs`:
+Start by installing the `live_palette` package from Hex.
 
 ```elixir
 def deps do
@@ -15,8 +16,3 @@ def deps do
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/live_palette>.
-
