@@ -31,11 +31,7 @@ defmodule LivePalette.Search.Index.Item do
     }
   end
 
-  @spec match_and_score(
-          item :: Item.t(),
-          query :: String.t(),
-          threshold :: float()
-        ) :: float() | :nomatch
+  @spec match_and_score(item :: Item.t(), query :: String.t(), threshold :: float()) :: float() | :nomatch
   def match_and_score(%Item{} = item, query, threshold) do
     normalized_query = String.downcase(query)
 

@@ -40,12 +40,7 @@ defmodule LivePalette.Result do
 
   defp result(assigns) do
     ~H"""
-    <div
-      role="option"
-      phx-click="select_result"
-      phx-target={@target}
-      phx-value-id={@id}
-    >
+    <div role="option" phx-click="select_result" phx-target={@target} phx-value-id={@id}>
       <div class="p-3 px-4 bg-transparent hover:bg-black/5 border-l-2 border-transparent hover:border-solid hover:border-black flex items-center justify-between cursor-pointer">
         <div class="flex gap-2 items-center text-sm">
           <%= if @icon_name do %>

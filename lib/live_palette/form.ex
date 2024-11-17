@@ -5,10 +5,7 @@ defmodule LivePalette.Form do
   use Phoenix.Component
 
   attr :placeholder, :string, required: true
-
-  attr :field, Phoenix.HTML.FormField,
-    doc:
-      "a form field struct retrieved from the form, for example: @form[:email]"
+  attr :field, Phoenix.HTML.FormField, doc: "a form field struct retrieved from the form, for example: @form[:email]"
 
   def input(assigns) do
     ~H"""

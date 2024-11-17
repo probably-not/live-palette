@@ -22,21 +22,16 @@ defmodule LivePalette.Search.Index do
     %Index{
       items: items,
       always_shown: Enum.filter(items, & &1.always_show?),
-      actionables:
-        Enum.reduce(items, %{}, fn item, acc ->
-          Map.put(acc, item.id, item.original)
-        end)
+      actionables: Enum.reduce(items, %{}, fn item, acc -> Map.put(acc, item.id, item.original) end)
     }
   end
 
-  @spec get_actionable!(index :: Index.t(), id :: Item.id()) ::
-          Actionable.t() | no_return()
+  @spec get_actionable!(index :: Index.t(), id :: Item.id()) :: Actionable.t() | no_return()
   def get_actionable!(%Index{} = index, id) do
     Map.fetch!(index.actionables, id)
   end
 
-  @spec query(index :: Index.t(), query :: String.t(), threshold :: float()) ::
-          list(Item.t())
+  @spec query(index :: Index.t(), query :: String.t(), threshold :: float()) :: list(Item.t())
   def query(index, query, threshold)
 
   def query(%Index{} = index, "", _threshold) do

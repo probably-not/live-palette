@@ -40,8 +40,7 @@ defmodule LivePalette.Search.Index.PreprocessedAction do
   # credo:disable-for-next-line
   # TODO: This all needs to be tested and validated. Ideally as much as possible.
 
-  @spec matches(action :: PreprocessedAction.t(), query :: String.t()) ::
-          list(float())
+  @spec matches(action :: PreprocessedAction.t(), query :: String.t()) :: list(float())
   def matches(action, query)
 
   def matches(%PreprocessedAction{title: title}, title) do
@@ -93,11 +92,8 @@ defmodule LivePalette.Search.Index.PreprocessedAction do
 
   defp substring_match(value, query) do
     case :binary.match(value, query) do
-      :nomatch ->
-        nil
-
-      {index, _match_length} ->
-        weights().substring * (1 - index / byte_size(value) * 0.3)
+      :nomatch -> nil
+      {index, _match_length} -> weights().substring * (1 - index / byte_size(value) * 0.3)
     end
   end
 

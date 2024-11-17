@@ -6,6 +6,6 @@
     "{mix,.formatter}.exs",
     "{config,lib,test,bench}/**/*.{ex,exs,heex}"
   ],
-  line_length: 80,
+  line_length: 120,
   locals_without_parens: [slot: 2, slot: 3, attr: 3]
 ]

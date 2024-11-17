@@ -54,13 +54,7 @@ defmodule LivePalette.ComponentLive do
   end
 
   def handle_event("search", %{"search_text" => search_text} = _params, socket) do
-    matches =
-      Index.query(
-        socket.assigns.search_index,
-        search_text,
-        socket.assigns.match_threshold
-      )
-
+    matches = Index.query(socket.assigns.search_index, search_text, socket.assigns.match_threshold)
     {:noreply, assign_matches(socket, search_text, matches)}
   end
 
@@ -89,25 +83,13 @@ defmodule LivePalette.ComponentLive do
     ## the sake of "prettiness", I'll keep it like this. However, it should probably be looked at
     ## eventually, just to make sure that this isn't... a problem...
     ~H"""
-    <div
-      id={@id}
-      phx-target={@myself}
-      phx-window-keydown="show_palette"
-      phx-key={@key}
-      phx-throttle={1000}
-    >
-    </div>
+    <div id={@id} phx-target={@myself} phx-window-keydown="show_palette" phx-key={@key} phx-throttle={1000}></div>
     """
   end
 
   def render(%{show: true} = assigns) do
     ~H"""
-    <div
-      id={@id}
-      phx-target={@myself}
-      phx-window-keyup="hide_palette"
-      phx-key="Escape"
-    >
+    <div id={@id} phx-target={@myself} phx-window-keyup="hide_palette" phx-key="Escape">
       <div
         id={@id <> "-wrapper"}
         class="fixed flex items-start justify-center w-full inset-0 pt-[14vh] px-4 pb-4"
@@ -132,21 +114,10 @@ defmodule LivePalette.ComponentLive do
           phx-target={@myself}
           class="max-w-[600px] w-full bg-white text-black rounded-lg overflow-hidden shadow-[0px_6px_20px_0px_rgba(0,0,0,0.2)] pointer-events-auto"
         >
-          <.form
-            for={@form}
-            phx-target={@myself}
-            phx-change="search"
-            phx-submit="search"
-            phx-throttle={500}
-          >
+          <.form for={@form} phx-target={@myself} phx-change="search" phx-submit="search" phx-throttle={500}>
             <.input field={@form[:search_text]} placeholder={@placeholder} />
           </.form>
-          <.result_list
-            :if={@results != []}
-            target={@myself}
-            icon_component={@icon_component}
-            results={@results}
-          />
+          <.result_list :if={@results != []} target={@myself} icon_component={@icon_component} results={@results} />
         </div>
       </div>
     </div>
