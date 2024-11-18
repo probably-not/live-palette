@@ -12,7 +12,7 @@ Start by installing the `live_palette` package from Hex.
 ```elixir
 def deps do
   [
-    {:live_palette, "~> 0.1.0"}
+    {:live_palette, "~> 0.1.1"}
   ]
 end
 ```
