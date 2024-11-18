@@ -24,7 +24,7 @@ defimpl LivePalette.Actionable.Renderable, for: LivePaletteDemoWeb.RenderedActio
       |> assign(:action_subtitle, action.subtitle)
 
     ~H"""
-    <.modal id="example-rendered-modal">
+    <.modal id="example-rendered-modal" show={true}>
       <h1><%= @action_title %></h1>
       <p><%= @action_subtitle %></p>
     </.modal>
