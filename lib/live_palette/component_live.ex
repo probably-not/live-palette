@@ -21,18 +21,10 @@ defmodule LivePalette.ComponentLive do
       assign(socket, assigns)
       |> assign_new(:form, fn -> to_form(%{"search_text" => ""}) end)
       |> assign_new(:results, fn -> [] end)
+      |> assign(:rendered_action, fn -> nil end)
       |> initialize_index()
 
     {:ok, socket}
-  end
-
-  defp initialize_index(socket) do
-    search_index = Index.build(socket.assigns.actions)
-    matches = Index.query(search_index, "", socket.assigns.match_threshold)
-
-    socket
-    |> assign(:search_index, search_index)
-    |> assign_matches("", matches)
   end
 
   def handle_event("show_palette", %{"key" => _key} = params, socket) do
@@ -40,18 +32,18 @@ defmodule LivePalette.ComponentLive do
 
     cond do
       socket.assigns.require_metakey and meta? ->
-        {:noreply, assign(socket, show: true)}
+        {:noreply, show_palette(socket)}
 
       socket.assigns.require_metakey and not meta? ->
         {:noreply, socket}
 
       true ->
-        {:noreply, assign(socket, show: true)}
+        {:noreply, show_palette(socket)}
     end
   end
 
   def handle_event("hide_palette", _params, socket) do
-    {:noreply, assign(socket, show: false)}
+    {:noreply, hide_palette(socket)}
   end
 
   def handle_event("search", %{"search_text" => search_text} = _params, socket) do
@@ -60,6 +52,11 @@ defmodule LivePalette.ComponentLive do
   end
 
   def handle_event("select_result", %{"id" => id} = _params, socket) do
+    # On selection, we always hide the palette.
+    # When the user selects, we are either going to move to a new page,
+    # or render something, so the palette is no longer relevant.
+    socket = hide_palette(socket)
+
     selected_actionable = Index.get_actionable!(socket.assigns.search_index, id)
 
     renderable = Renderable.impl_for(selected_actionable)
@@ -81,10 +78,34 @@ defmodule LivePalette.ComponentLive do
     end
   end
 
+  defp initialize_index(socket) do
+    search_index = Index.build(socket.assigns.actions)
+    matches = Index.query(search_index, "", socket.assigns.match_threshold)
+
+    socket
+    |> assign(:search_index, search_index)
+    |> assign_matches("", matches)
+  end
+
+  defp show_palette(socket) do
+    socket
+    |> assign(show: true)
+    |> assign(:rendered_action, nil)
+  end
+
+  defp hide_palette(socket) do
+    matches = Index.query(socket.assigns.search_index, "", socket.assigns.match_threshold)
+
+    socket
+    |> assign(show: false)
+    |> assign_matches("", matches)
+  end
+
   defp assign_matches(socket, term, matches) do
     socket
     |> assign(:form, to_form(%{"search_text" => term}))
     |> assign(:results, matches)
+    |> assign(:rendered_action, nil)
   end
 
   def disconnected_render(assigns) do
@@ -102,7 +123,11 @@ defmodule LivePalette.ComponentLive do
     ## the sake of "prettiness", I'll keep it like this. However, it should probably be looked at
     ## eventually, just to make sure that this isn't... a problem...
     ~H"""
-    <div id={@id} phx-target={@myself} phx-window-keydown="show_palette" phx-key={@key} phx-throttle={1000}></div>
+    <div id={@id} phx-target={@myself} phx-window-keydown="show_palette" phx-key={@key} phx-throttle={1000}>
+      <%= if not is_nil(@rendered_action) do %>
+        <%= Renderable.render(@rendered_action, assigns) %>
+      <% end %>
+    </div>
     """
   end
 
