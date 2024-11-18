@@ -21,7 +21,7 @@ defmodule LivePalette.ComponentLive do
       assign(socket, assigns)
       |> assign_new(:form, fn -> to_form(%{"search_text" => ""}) end)
       |> assign_new(:results, fn -> [] end)
-      |> assign(:rendered_action, fn -> nil end)
+      |> assign(:rendered_action, nil)
       |> initialize_index()
 
     {:ok, socket}
@@ -102,7 +102,6 @@ defmodule LivePalette.ComponentLive do
     socket
     |> assign(:form, to_form(%{"search_text" => term}))
     |> assign(:results, matches)
-    |> assign(:rendered_action, nil)
   end
 
   def disconnected_render(assigns) do
