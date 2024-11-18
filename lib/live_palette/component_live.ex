@@ -47,8 +47,7 @@ defmodule LivePalette.ComponentLive do
   end
 
   def handle_event("search", %{"search_text" => search_text} = _params, socket) do
-    matches = Index.query(socket.assigns.search_index, search_text, socket.assigns.match_threshold)
-    {:noreply, assign_matches(socket, search_text, matches)}
+    {:noreply, assign_matches(socket, search_text)}
   end
 
   def handle_event("select_result", %{"id" => id} = _params, socket) do
@@ -79,12 +78,9 @@ defmodule LivePalette.ComponentLive do
   end
 
   defp initialize_index(socket) do
-    search_index = Index.build(socket.assigns.actions)
-    matches = Index.query(search_index, "", socket.assigns.match_threshold)
-
     socket
-    |> assign(:search_index, search_index)
-    |> assign_matches("", matches)
+    |> assign(:search_index, Index.build(socket.assigns.actions))
+    |> assign_matches("")
   end
 
   defp show_palette(socket) do
@@ -94,14 +90,15 @@ defmodule LivePalette.ComponentLive do
   end
 
   defp hide_palette(socket) do
-    matches = Index.query(socket.assigns.search_index, "", socket.assigns.match_threshold)
-
     socket
     |> assign(show: false)
-    |> assign_matches("", matches)
+    |> assign_matches("")
   end
 
-  defp assign_matches(socket, term, matches) do
+  defp assign_matches(socket, term) do
+    matches =
+      Index.query(socket.assigns.search_index, term, socket.assigns.match_threshold, socket.assigns.maximum_results)
+
     socket
     |> assign(:form, to_form(%{"search_text" => term}))
     |> assign(:results, matches)

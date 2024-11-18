@@ -31,14 +31,15 @@ defmodule LivePalette.Search.Index do
     Map.fetch!(index.actionables, id)
   end
 
-  @spec query(index :: Index.t(), query :: String.t(), threshold :: float()) :: list(Item.t())
-  def query(index, query, threshold)
+  @spec query(index :: Index.t(), query :: String.t(), threshold :: float(), count :: non_neg_integer()) ::
+          list(Item.t())
+  def query(index, query, threshold, count)
 
-  def query(%Index{} = index, "", _threshold) do
+  def query(%Index{} = index, "", _threshold, _count) do
     index.always_shown
   end
 
-  def query(%Index{} = index, query, threshold) when is_binary(query) do
+  def query(%Index{} = index, query, threshold, count) when is_binary(query) do
     Enum.reduce(index.items, [], fn %Item{} = item, acc ->
       case Item.match_and_score(item, query, threshold) do
         :nomatch -> acc
@@ -47,5 +48,6 @@ defmodule LivePalette.Search.Index do
     end)
     |> List.keysort(0, :desc)
     |> Enum.map(&elem(&1, 1))
+    |> Enum.take(count)
   end
 end
