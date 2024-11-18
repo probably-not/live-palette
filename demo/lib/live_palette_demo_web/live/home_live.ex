@@ -5,18 +5,27 @@ defmodule LivePaletteDemoWeb.HomeLive do
 
   def mount(_params, _session, socket) do
     actions = [
-      %{
-        title: "Do something",
-        always_show?: true,
-        icon_name: "hero-home-modern"
+      %LivePaletteDemoWeb.GotoExternal{
+        title: "Go to Google",
+        link: "https://www.google.com"
       },
-      %{
-        title: "Do something else",
+      %LivePaletteDemoWeb.GotoExternal{
+        title: "Go to GitHub",
         subtitle: "This does something else",
-        always_show?: true
+        link: "https://www.github.com"
       },
-      %{
-        title: "Do something other than those 2",
+      %LivePaletteDemoWeb.GotoExternal{
+        title: "Go to the live_palette Docs",
+        link: "https://hexdocs.pm/live_palette/"
+      },
+      %LivePaletteDemoWeb.GotoInternal{
+        title: "Home",
+        link: ~p"/"
+      },
+      %LivePaletteDemoWeb.RenderedAction{
+        title: "Show a modal",
+        subtitle: "This action shows a random modal to see how rendered actions work",
+        icon_name: "hero-sparkles",
         always_show?: false
       }
     ]
