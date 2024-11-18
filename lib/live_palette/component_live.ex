@@ -5,7 +5,7 @@ defmodule LivePalette.ComponentLive do
   import LivePalette.{Form, Result}
 
   alias LivePalette.Search.Index
-  alias LivePalette.Actionable.{ExternallyLinkable, Linkable, Renderable, NotImplemented}
+  alias LivePalette.Actionable.{ExternallyLinkable, Linkable, NotImplemented, Renderable}
   alias Phoenix.LiveView.JS
 
   def mount(socket) do
