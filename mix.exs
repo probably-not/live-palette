@@ -69,7 +69,7 @@ defmodule LivePalette.MixProject do
     [
       {:phoenix_live_view, "~> 1.0.0-rc.6"},
       ## Testing and Development Dependencies
-      {:ex_doc, "~> 0.34.2", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.35.1", only: :dev, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.18", only: :test},
       {:remixed_remix, "~> 2.0.2", only: :dev},
