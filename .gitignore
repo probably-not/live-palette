@@ -1,5 +1,6 @@
 ### Extras ###
 priv/plts
+node_modules
 
 # The directory Mix will write compiled artifacts to.
 /_build/
@@ -94,3 +95,4 @@ Temporary Items
 # Ignore all local history of files
 .history
 .ionide
+
