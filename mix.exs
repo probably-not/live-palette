@@ -86,7 +86,33 @@ defmodule LivePalette.MixProject do
     [
       quality: ["format", "credo --strict", "dialyzer"],
       ci: ["coveralls", "format --check-formatted", "credo --strict", "dialyzer"],
-      "assets.build": ["esbuild module", "esbuild main"]
+      "assets.setup": [
+        "esbuild.install --if-missing",
+        "cmd npm install"
+      ],
+      "assets.lint.check": [
+        "cmd npm run eslint:check"
+      ],
+      "assets.lint.fix": [
+        "cmd npm run eslint:fix"
+      ],
+      "assets.format.check": [
+        "cmd npm run format:check"
+      ],
+      "assets.format.fix": [
+        "cmd npm run format"
+      ],
+      "assets.compile": [
+        "cmd npm run compile"
+      ],
+      "assets.build": [
+        "assets.setup",
+        "assets.format.check",
+        "assets.lint.check",
+        "assets.compile",
+        "esbuild module",
+        "esbuild main"
+      ]
     ]
   end
 
