@@ -41,21 +41,15 @@ defmodule LivePaletteDemo.MixProject do
     [
       {:phoenix, "~> 1.7.14"},
       {:phoenix_html, "~> 4.1"},
+      {:phoenix_live_view, "~> 1.1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      # TODO bump on release to {:phoenix_live_view, "~> 1.0.0"},
-      {:phoenix_live_view, "~> 1.0.0-rc.1", override: true},
       {:floki, ">= 0.30.0", only: :test},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.5"},
-      {:heroicons,
-       github: "tailwindlabs/heroicons",
-       tag: "v2.1.5",
-       app: false,
-       compile: false,
-       sparse: "optimized"},
+      {:heroicons, github: "tailwindlabs/heroicons", tag: "v2.1.5", app: false, compile: false, sparse: "optimized"},
       {:live_palette, path: ".."}
     ]
   end

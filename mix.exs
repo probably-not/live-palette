@@ -67,7 +67,7 @@ defmodule LivePalette.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_live_view, "~> 1.0.0-rc.6"},
+      {:phoenix_live_view, "~> 1.1.0"},
       ## Testing and Development Dependencies
       {:ex_doc, "~> 0.34.2", only: :dev, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
