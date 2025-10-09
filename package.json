@@ -24,9 +24,7 @@
     "eslint:check": "eslint ./assets --max-warnings 0",
     "eslint:fix": "eslint ./assets --fix"
   },
-  "dependencies": {
-    "phoenix_live_view": "file:./deps/phoenix_live_view"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@eslint/js": "^9.37.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
