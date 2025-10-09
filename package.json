@@ -19,8 +19,8 @@
   },
   "scripts": {
     "compile": "tsc",
-    "format": "prettier ./assets package.json .prettierrc --write",
-    "format:check": "prettier ./assets package.json .prettierrc --check",
+    "format": "prettier ./assets package.json tsconfig.json eslint.config.js .prettierrc --write",
+    "format:check": "prettier ./assets package.json tsconfig.json eslint.config.js .prettierrc --check",
     "eslint:check": "eslint ./assets --max-warnings 0",
     "eslint:fix": "eslint ./assets --fix"
   },
