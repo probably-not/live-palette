@@ -121,7 +121,7 @@ defmodule LivePalette.ComponentLive do
     ~H"""
     <div id={@id} phx-target={@myself} phx-window-keydown="show_palette" phx-key={@key} phx-throttle={1000}>
       <%= if not is_nil(@rendered_action) do %>
-        <%= Renderable.render(@rendered_action, assigns) %>
+        {Renderable.render(@rendered_action, assigns)}
       <% end %>
     </div>
     """

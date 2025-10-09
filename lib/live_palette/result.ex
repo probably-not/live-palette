@@ -44,11 +44,11 @@ defmodule LivePalette.Result do
       <div class="p-3 px-4 bg-transparent hover:bg-black/5 border-l-2 border-transparent hover:border-solid hover:border-black flex items-center justify-between cursor-pointer">
         <div class="flex gap-2 items-center text-sm">
           <%= if @icon_name do %>
-            <%= @icon_component.(%{name: @icon_name, class: "h-6 w-6"}) %>
+            {@icon_component.(%{name: @icon_name, class: "h-6 w-6"})}
           <% end %>
           <div class="flex flex-col">
-            <div><span><%= @title %></span></div>
-            <span :if={@subtitle} class="text-xs"><%= @subtitle %></span>
+            <div><span>{@title}</span></div>
+            <span :if={@subtitle} class="text-xs">{@subtitle}</span>
           </div>
         </div>
       </div>
