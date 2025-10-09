@@ -21,6 +21,8 @@ defmodule LivePalette.MixProject do
         links: %{"GitHub" => "https://github.com/probably-not/live-palette"},
         files: [
           "lib",
+          "assets",
+          "package.json",
           ".formatter.exs",
           "mix.exs",
           "README*",
@@ -75,19 +77,16 @@ defmodule LivePalette.MixProject do
       {:remixed_remix, "~> 2.0.2", only: :dev},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:benchee, "~> 1.0", only: :dev},
-      {:benchee_markdown, "~> 0.3", only: :dev}
+      {:benchee_markdown, "~> 0.3", only: :dev},
+      {:esbuild, "~> 0.8", runtime: false, only: [:dev, :test]}
     ]
   end
 
   defp aliases do
     [
       quality: ["format", "credo --strict", "dialyzer"],
-      ci: [
-        "coveralls",
-        "format --check-formatted",
-        "credo --strict",
-        "dialyzer"
-      ]
+      ci: ["coveralls", "format --check-formatted", "credo --strict", "dialyzer"],
+      "assets.build": ["esbuild module", "esbuild main"]
     ]
   end
 
