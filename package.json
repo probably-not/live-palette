@@ -17,7 +17,25 @@
     "type": "git",
     "url": "git://github.com/probably-not/live_palette.git"
   },
+  "scripts": {
+    "compile": "tsc",
+    "format": "prettier ./assets package.json .prettierrc --write",
+    "format:check": "prettier ./assets package.json .prettierrc --check",
+    "eslint:check": "eslint ./assets --max-warnings 0",
+    "eslint:fix": "eslint ./assets --fix"
+  },
   "dependencies": {
     "phoenix_live_view": "file:./deps/phoenix_live_view"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "esbuild": "0.25.10",
+    "eslint": "^9.37.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.4.0",
+    "prettier": "3.6.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0"
   }
 }

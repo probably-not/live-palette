@@ -1,0 +1,10 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore demo:
+demo
+
+# Ignore vendored and node_modules (we do not own them):
+vendor
+node_modules
