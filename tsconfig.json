@@ -1,13 +1,6 @@
 {
-  "include": [
-    "assets/js/**/*.ts",
-    "assets/js/**/*.js"
-  ],
-  "exclude": [
-    "node_modules",
-    "vendor",
-    "demo"
-  ],
+  "include": ["assets/js/**/*.ts", "assets/js/**/*.js"],
+  "exclude": ["node_modules", "vendor", "demo"],
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
@@ -21,9 +14,7 @@
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
-      "*": [
-        "*"
-      ]
+      "*": ["*"]
     },
     "strict": true,
     "noImplicitAny": true,
@@ -37,10 +28,6 @@
     // - https://github.com/phoenixframework/phoenix/pull/6364
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "es2022",
-      "dom",
-      "dom.iterable"
-    ]
+    "lib": ["es2022", "dom", "dom.iterable"]
   }
 }
